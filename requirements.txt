@@ -1,1 +1,7 @@
 gitpython
+langchain
+langchain-community
+tqdm
+langchain-text-splitters
+langchain-ollama 
+langchain-chroma
