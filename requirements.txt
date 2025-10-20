@@ -5,3 +5,4 @@ tqdm
 langchain-text-splitters
 langchain-ollama 
 langchain-chroma
+radon
