@@ -24,7 +24,6 @@ def extract_functions_and_top_level(doc):
     function_ranges = []
     function_docs = []
 
-    # Extract function definitions
     for node in ast.walk(tree):
         if isinstance(node, ast.FunctionDef):
             start = node.lineno - 1
@@ -36,7 +35,7 @@ def extract_functions_and_top_level(doc):
             func_doc.metadata["function_name"] = node.name
             function_docs.append(func_doc)
 
-    # Remove function lines from top-level code
+
     all_func_lines = set()
     for start, end in function_ranges:
         all_func_lines.update(range(start, end))
@@ -46,7 +45,7 @@ def extract_functions_and_top_level(doc):
         top_doc = doc.copy()
         top_doc.page_content = "".join(top_lines)
         top_doc.metadata["function_name"] = "top_level_code"
-        function_docs.insert(0, top_doc)  # keep top-level code first
+        function_docs.insert(0, top_doc)  
 
     return function_docs
 
@@ -74,7 +73,7 @@ def create_vector_store_from_repo(
         ".md": "README"
     }
 
-    # Load all documents
+
     documents = []
     for ext, loader_class in ex_to_loader.items():
         loader = DirectoryLoader(
@@ -92,7 +91,7 @@ def create_vector_store_from_repo(
 
     print(f"Loaded {len(documents)} documents from repo: {repo_path}")
 
-    # Extract functions and top-level code
+
     all_docs = []
     for doc in documents:
         if doc.metadata["file_type"] in ("python", "python_notebook"):
@@ -102,7 +101,7 @@ def create_vector_store_from_repo(
             doc.metadata["function_name"] = None
             all_docs.append(doc)
 
-    # Split only large documents
+
     split_docs = []
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     for doc in all_docs:
@@ -117,7 +116,7 @@ def create_vector_store_from_repo(
 
     print(f"Total chunks created: {len(split_docs)}")
 
-    # Create vector store
+
     embedding_model = OllamaEmbeddings(model="mxbai-embed-large")
     vector_store = Chroma.from_documents(
         documents=split_docs,
@@ -132,7 +131,7 @@ def query_vector_store(vector_store, query,k:int=5) -> str:
     """
     Query the vector store and print top-k results with duplicates removed.
     """
-    results = vector_store.similarity_search(query, k=k*3)  # fetch more to filter duplicates
+    results = vector_store.similarity_search(query, k=k*3)  
     seen_contents = set()
     text_results = []
 

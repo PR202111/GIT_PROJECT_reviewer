@@ -51,7 +51,7 @@ def analyze_repo_structure(repo_path: str = REPO_PATH) -> str:
 
 
 
-def get_git_history(repo_path: str, max_commits: int = 20) -> str:
+def get_git_history(repo_path: str = REPO_PATH, max_commits: int = 20) -> str:
     """
     Get recent git commit history for the repository.
     Returns a formatted string with author, date, message, and changed files.
@@ -65,7 +65,7 @@ def get_git_history(repo_path: str, max_commits: int = 20) -> str:
     if not commits:
         return "No commits found in this repository."
 
-    history_text = f"📜 Git History for {repo_path}\n" + "=" * 80 + "\n"
+    history_text = f"Git History for {repo_path}\n" + "=" * 80 + "\n"
 
     for commit in commits:
         date = datetime.fromtimestamp(commit.committed_date).strftime("%Y-%m-%d %H:%M:%S")

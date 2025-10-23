@@ -6,3 +6,5 @@ langchain-text-splitters
 langchain-ollama 
 langchain-chroma
 radon
+langchain-core 
+langgraph 
