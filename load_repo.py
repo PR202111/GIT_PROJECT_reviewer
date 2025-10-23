@@ -21,6 +21,16 @@ def SetUpRepo(link:Optional[str] = None,path:Optional[str] = None) -> Union[str,
     else:
         print("No repo link or path was given")
         return "reload_and_continue"
+    
+
+if __name__ == "__main__":
+    while True:
+        link_path = input("Enter Repo link: ")
+        repo = SetUpRepo(link_path)
+        if repo == "reload_and_continue":
+            continue
+        else: break
+    
 
 
 

@@ -3,6 +3,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.graph import START, StateGraph, MessagesState
 from langgraph.prebuilt import tools_condition, ToolNode
 from tools_loader import create_tool_list  
+from load_repo import SetUpRepo
 from CONFIG import REPO_PATH,MODEL
 
 def summarize_tool_output(tool_call_result):
@@ -64,13 +65,14 @@ react_graph = builder.compile()
 
 
 if __name__ == "__main__":
+    
     print("GitHub Project Analyzer (type 'exit' or 'quit' to stop)\n")
     conversation = []  # keep message history
 
     while True:
         user_input = input("You: ")
         if user_input.lower() in {"exit", "quit"}:
-            print("Goodbye 👋")
+            print("Goodbye ;)\n")
             break
 
         
@@ -79,9 +81,10 @@ if __name__ == "__main__":
         
         result = react_graph.invoke({"messages": conversation})
 
-        
+        print("Processing the Result ...\n")
         last_message = result["messages"][-1]
         print(f"Agent: {last_message.content}\n")
+        print("Output Completed for the above the Query\n")
 
         
         conversation = result["messages"]
